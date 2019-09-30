@@ -6,7 +6,7 @@ const LikeButton = (props) => {
 
   useEffect(() => {
     setLikesCounter(props.likes)
-  }, [])
+  }, [props.likes])
 
   console.log(props.blogId)
 
