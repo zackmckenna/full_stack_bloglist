@@ -2,7 +2,10 @@ import React, { useState, useEffect } from 'react'
 import loginService from './services/login'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
+import LoginForm from './components/LoginForm'
+import Togglable from './components/Togglable'
 import blogsService from './services/blogs'
+import BlogForm from './components/BlogForm'
 
 const App = () => {
   const [ username, setUsername ] = useState('')
@@ -20,10 +23,8 @@ const App = () => {
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      const userId = user.id
       blogsService
-      .getById(userId).then(initialBlogs => {
+      .getAll().then(initialBlogs => {
         setBlogs(initialBlogs)
       })
     }
@@ -50,8 +51,6 @@ const App = () => {
       console.log(localStorage)
       setUser(user)
       blogsService.setToken(user.token)
-      const userBlogs = await blogsService.getById(user.id)
-      setBlogs(userBlogs)
       setLoginMessage(`${user.name} is logged in`)
       setUsername('')
       setPassword('')
@@ -83,6 +82,16 @@ const App = () => {
     localStorage.clear()
   }
 
+  const handleLike = async ( likedBlog ) => {
+    try{
+      await blogsService.likeBlog({
+        likedBlog
+      })
+      reloadBlogs()
+    } catch(exception){
+      console.log(exception)
+    }
+  }
   const handleCreateNew = async (event) => {
     event.preventDefault()
     try{
@@ -102,65 +111,7 @@ const App = () => {
     }
   }
 
-  const createNewForm = () => (
-    <form onSubmit={handleCreateNew}>
-      <div>
-        title
-        <input
-        type='text'
-        value={title}
-        name='Title'
-        onChange={({ target }) => setTitle(target.value)}
-        />
-      </div>
-      <div>
-        author
-        <input
-        type='text'
-        value={author}
-        name='Author'
-        onChange={({ target }) => setAuthor(target.value)}
-        />
-      </div>
-      <div>
-      url
-        <input
-        type='text'
-        value={url}
-        name='Url'
-        onChange={({ target }) => setUrl(target.value)}
-        />
-      </div>
-      <button type='submit'>create new</button>
-    </form>
-  )
-
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type='text'
-            value={username}
-            name='Username'
-            onChange={({ target }) => setUsername(target.value)}
-            />
-        </div>
-        <div>
-          password
-            <input
-            type='password'
-            value={password}
-            name='Password'
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type='submit'>login</button>
-      </form>
-  )
-
   if (user === null && loggedIn === false) {
-    console.log(localStorage)
     return (
       <>
       <div>
@@ -168,8 +119,17 @@ const App = () => {
       </div>
       <h2>{errorMessage}</h2>
       <div>
-        {loginForm()}
+      <Togglable buttonLabel='login'>
+          <LoginForm
+          username={username}
+          password={password}
+          handleUsernameChange={({ target }) => setUsername(target.value)}
+          handlePasswordChange={({ target }) => setPassword(target.value)}
+          handleSubmit={handleLogin}
+          />
+        </Togglable>
       </div>
+
     </>
     )
   }
@@ -188,16 +148,27 @@ const App = () => {
       <div>
         <Notification notification={notification}/>
       </div>
+      <Togglable buttonLabel='create new'>
+        <BlogForm
+        url={url}
+        title={title}
+        author={author}
+        handleTitleChange={({ target }) => setTitle(target.value)}
+        handleAuthorChange={({ target }) => setAuthor(target.value)}
+        handleSubmit={handleCreateNew}
+        handleUrlChange={({ target }) => setUrl(target.value)}
+        handleLike={handleLike}
+        />
+      </Togglable>
+        <div>
+          <br>
+          </br>
+        </div>
+
       <div>
-          {blogs.map(blog => {
+          {blogs.sort((a,b) => b.likes - a.likes).map(blog => {
             return <Blog key={blog.id} blog={blog}/>
           })}
-      </div>
-      <div>
-        <h2>Create New Entry</h2>
-      </div>
-      <div>
-        {createNewForm()}
       </div>
     </>
 
