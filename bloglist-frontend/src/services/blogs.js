@@ -19,13 +19,18 @@ const createNew = async (newBlog) => {
   return response.data
 }
 
+const deleteBlog = async blogId => {
+  const config = {
+    headers: { Authorization: token },
+  }
+  const response = await axios.delete(`${baseUrl}/${blogId}`, config)
+  return response.data
+}
+
 const likeBlog = async likedBlogId => {
   try{
-  console.log(likedBlogId)
-  const request = await axios.get(`${baseUrl}/${likedBlogId}`)
-  console.log(request.data)
+  const request = await axios.get(`${baseUrl}/${likedBlogId.likedBlog}`)
   console.log(request.data.likes)
-
   const config = {
     headers: { Authorization: token },
   }
@@ -33,14 +38,15 @@ const likeBlog = async likedBlogId => {
   console.log(updatedBlog)
   updatedBlog.likes +=1
   console.log(updatedBlog)
-  const response = await axios.put(`${baseUrl}/${likedBlogId}`, updatedBlog, config)
+  const response = await axios.put(`${baseUrl}/${likedBlogId.likedBlog}`, updatedBlog, config)
   console.log(response)
-} catch (exception){
-  console.log(exception)
-}
+  return response.data
+  } catch (exception){
+    console.log(exception)
+  }
 }
 
-const getById = async userId => {
+const getByUserId = async userId => {
   const request = await axios.get(baseUrl)
   console.log(request)
   const filteredBlogs = request.data.filter(blog => {
@@ -58,4 +64,10 @@ const getById = async userId => {
   return userBlogs
 }
 
-export default { getAll, getById, createNew, setToken, likeBlog }
+const getById = async blogId => {
+  const request = await axios.get(`${baseUrl}/${blogId}`)
+  console.log(request.data)
+  return request.data
+}
+
+export default { getAll, getByUserId, createNew, setToken, likeBlog, deleteBlog, getById }

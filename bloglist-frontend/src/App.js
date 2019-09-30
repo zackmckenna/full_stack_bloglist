@@ -66,10 +66,8 @@ const App = () => {
   const reloadBlogs = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
       if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      const userId = user.id
       blogsService
-      .getById(userId).then(initialBlogs => {
+      .getAll().then(initialBlogs => {
         setBlogs(initialBlogs)
       })
     }
@@ -82,16 +80,6 @@ const App = () => {
     localStorage.clear()
   }
 
-  const handleLike = async ( likedBlog ) => {
-    try{
-      await blogsService.likeBlog({
-        likedBlog
-      })
-      reloadBlogs()
-    } catch(exception){
-      console.log(exception)
-    }
-  }
   const handleCreateNew = async (event) => {
     event.preventDefault()
     try{
@@ -157,7 +145,6 @@ const App = () => {
         handleAuthorChange={({ target }) => setAuthor(target.value)}
         handleSubmit={handleCreateNew}
         handleUrlChange={({ target }) => setUrl(target.value)}
-        handleLike={handleLike}
         />
       </Togglable>
         <div>
@@ -167,7 +154,12 @@ const App = () => {
 
       <div>
           {blogs.sort((a,b) => b.likes - a.likes).map(blog => {
-            return <Blog key={blog.id} blog={blog}/>
+            return <Blog
+                    setErrorMessage={setErrorMessage}
+                    reloadBlogs={reloadBlogs}
+                    key={blog.id}
+                    blog={blog}
+                    />
           })}
       </div>
     </>
