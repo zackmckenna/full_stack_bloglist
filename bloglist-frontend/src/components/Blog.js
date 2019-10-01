@@ -12,6 +12,8 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
 
   const currentUser = (JSON.parse(window.localStorage.loggedBlogappUser))
 
+  console.log(blog)
+
   useEffect(() => {
     if (blog.likes === undefined) {
       blog.likes = 0
@@ -84,31 +86,34 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
 
   return (
   <>
-  <div style={hideWhenVisible}>
-    <div style={blogStyle}>
-      <div onClick={toggleVisibility}>
-        {blog.title} {blog.author}
-      </div>
-    </div>
-  </div>
-  <div style={showWhenVisible}>
-    <div style={blogStyle}>
-      <div onClick={toggleVisibility}>
-        <div>
+  <div className='blog'>
+    click me
+    <div style={hideWhenVisible}>
+      <div style={blogStyle}>
+        <div className='blogContent' onClick={toggleVisibility}>
           {blog.title} {blog.author}
         </div>
-        <div>
-          {blog.url}
-        </div>
-        <div>
-        added by {blog.user.name}
-        </div>
-        <div>
-          {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
-        </div>
       </div>
-      <div style={showDelete}>
-        <DeleteBlogButton handleDeleteClick={handleDeleteClick} key={blog.id} blogId={blog.id}/>
+    </div>
+    <div style={showWhenVisible}>
+      <div style={blogStyle}>
+        <div onClick={toggleVisibility}>
+          <div>
+            {blog.title} {blog.author}
+          </div>
+          <div>
+            {blog.url}
+          </div>
+          <div>
+          added by {blog.user.name}
+          </div>
+          <div>
+            {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
+          </div>
+        </div>
+        <div style={showDelete}>
+          <DeleteBlogButton handleDeleteClick={handleDeleteClick} key={blog.id} blogId={blog.id}/>
+        </div>
       </div>
     </div>
   </div>
