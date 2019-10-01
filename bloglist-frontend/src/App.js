@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import blogsService from './services/blogs'
 import BlogForm from './components/BlogForm'
+import { useField } from './hooks'
 
 const App = () => {
   const [ username, setUsername ] = useState('')
@@ -152,7 +153,7 @@ const App = () => {
           </br>
         </div>
 
-      <div>
+      <div className='blogDiv'>
         {blogs.sort((a,b) => b.likes - a.likes).map(blog => {
           return <Blog
             setErrorMessage={setErrorMessage}

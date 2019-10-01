@@ -87,7 +87,6 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
   return (
   <>
   <div className='blog'>
-    click me
     <div style={hideWhenVisible}>
       <div style={blogStyle}>
         <div className='blogContent' onClick={toggleVisibility}>
@@ -107,7 +106,7 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
           <div>
           added by {blog.user.name}
           </div>
-          <div>
+          <div className='likesDiv'>
             {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
           </div>
         </div>

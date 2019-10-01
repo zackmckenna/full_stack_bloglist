@@ -19,17 +19,21 @@ test('clicking div will expand it to contain more information', () => {
   }
 
   const mockHandler = jest.fn()
-  const { getByText } = render(
+
+  const component = render(
     <Blog blog={blog} onClick={mockHandler}/>
   )
 
-  const button = getByText('click me')
-  const div = getByText('click me')
-  const likesDiv = getByText('click me')
+  const button = component.container.querySelector('.blog')
+  const div = component.container.querySelector('.blogContent')
+  const likesDiv = component.container.querySelector('.likesDiv')
+
 
   expect(div).toHaveTextContent('This is the title')
   expect(div).toHaveTextContent('This is the author')
-
+  console.log(prettyDOM(button))
+  console.log(prettyDOM(likesDiv))
+  console.log(prettyDOM(div))
 
   fireEvent.click(button)
 
