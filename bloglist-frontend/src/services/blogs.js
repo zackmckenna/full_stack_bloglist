@@ -29,18 +29,14 @@ const deleteBlog = async blogId => {
 
 const likeBlog = async likedBlogId => {
   try{
-  const request = await axios.get(`${baseUrl}/${likedBlogId.likedBlog}`)
-  console.log(request.data.likes)
-  const config = {
-    headers: { Authorization: token },
-  }
-  const updatedBlog = request.data
-  console.log(updatedBlog)
-  updatedBlog.likes +=1
-  console.log(updatedBlog)
-  const response = await axios.put(`${baseUrl}/${likedBlogId.likedBlog}`, updatedBlog, config)
-  console.log(response)
-  return response.data
+    const request = await axios.get(`${baseUrl}/${likedBlogId.likedBlog}`)
+    const config = {
+      headers: { Authorization: token },
+    }
+    const updatedBlog = request.data
+    updatedBlog.likes +=1
+    const response = await axios.put(`${baseUrl}/${likedBlogId.likedBlog}`, updatedBlog, config)
+    return response.data
   } catch (exception){
     console.log(exception)
   }

@@ -5,7 +5,7 @@ import blogsService from '../services/blogs'
 
 /*import LikeButton from './LikeButton'*/
 
-const Blog = ({ blog, reloadBlogs, setErrorMessage, user }) => {
+const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
 
   const [ visible, setVisible ] = useState(false)
   const [ likeCounter, setLikeCounter ] = useState(0)
@@ -19,8 +19,8 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage, user }) => {
     setLikeCounter(blog.likes)
   }, [blog.likes])
 
-  const hideWhenVisible = { display: visible ? 'none': ''}
-  const showWhenVisible = { display: visible ? '': 'none'}
+  const hideWhenVisible = { display: visible ? 'none': '' }
+  const showWhenVisible = { display: visible ? '': 'none' }
 
   const blogStyle = {
     paddingTop: 10,
@@ -75,38 +75,38 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage, user }) => {
     console.log(event.target.value)
     event.stopPropagation()
   }*/
-  let showDelete = {display: ''}
+  let showDelete = { display: '' }
   if (currentUser.id === blog.user.id){
-   showDelete = {display: ''}
+    showDelete = { display: '' }
   } else {
-   showDelete = {display: 'none'}
+    showDelete = { display: 'none' }
   }
 
   return (
   <>
   <div style={hideWhenVisible}>
     <div style={blogStyle}>
-    <div onClick={toggleVisibility}>
-      {blog.title} {blog.author}
-    </div>
+      <div onClick={toggleVisibility}>
+        {blog.title} {blog.author}
+      </div>
     </div>
   </div>
   <div style={showWhenVisible}>
     <div style={blogStyle}>
-    <div onClick={toggleVisibility}>
-      <div>
-        {blog.title} {blog.author}
-      </div>
-      <div>
-        {blog.url}
-      </div>
-      <div>
+      <div onClick={toggleVisibility}>
+        <div>
+          {blog.title} {blog.author}
+        </div>
+        <div>
+          {blog.url}
+        </div>
+        <div>
         added by {blog.user.name}
+        </div>
+        <div>
+          {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
+        </div>
       </div>
-      <div>
-        {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
-      </div>
-    </div>
       <div style={showDelete}>
         <DeleteBlogButton handleDeleteClick={handleDeleteClick} key={blog.id} blogId={blog.id}/>
       </div>

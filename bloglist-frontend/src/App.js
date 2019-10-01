@@ -24,9 +24,9 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       blogsService
-      .getAll().then(initialBlogs => {
-        setBlogs(initialBlogs)
-      })
+        .getAll().then(initialBlogs => {
+          setBlogs(initialBlogs)
+        })
     }
   }, [])
 
@@ -65,11 +65,11 @@ const App = () => {
 
   const reloadBlogs = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
-      if (loggedUserJSON) {
+    if (loggedUserJSON) {
       blogsService
-      .getAll().then(initialBlogs => {
-        setBlogs(initialBlogs)
-      })
+        .getAll().then(initialBlogs => {
+          setBlogs(initialBlogs)
+        })
     }
   }
 
@@ -107,13 +107,13 @@ const App = () => {
       </div>
       <h2>{errorMessage}</h2>
       <div>
-      <Togglable buttonLabel='login'>
+        <Togglable buttonLabel='login'>
           <LoginForm
-          username={username}
-          password={password}
-          handleUsernameChange={({ target }) => setUsername(target.value)}
-          handlePasswordChange={({ target }) => setPassword(target.value)}
-          handleSubmit={handleLogin}
+            username={username}
+            password={password}
+            handleUsernameChange={({ target }) => setUsername(target.value)}
+            handlePasswordChange={({ target }) => setPassword(target.value)}
+            handleSubmit={handleLogin}
           />
         </Togglable>
       </div>
@@ -138,13 +138,13 @@ const App = () => {
       </div>
       <Togglable buttonLabel='create new'>
         <BlogForm
-        url={url}
-        title={title}
-        author={author}
-        handleTitleChange={({ target }) => setTitle(target.value)}
-        handleAuthorChange={({ target }) => setAuthor(target.value)}
-        handleSubmit={handleCreateNew}
-        handleUrlChange={({ target }) => setUrl(target.value)}
+          url={url}
+          title={title}
+          author={author}
+          handleTitleChange={({ target }) => setTitle(target.value)}
+          handleAuthorChange={({ target }) => setAuthor(target.value)}
+          handleSubmit={handleCreateNew}
+          handleUrlChange={({ target }) => setUrl(target.value)}
         />
       </Togglable>
         <div>
@@ -153,14 +153,14 @@ const App = () => {
         </div>
 
       <div>
-          {blogs.sort((a,b) => b.likes - a.likes).map(blog => {
-            return <Blog
-                    setErrorMessage={setErrorMessage}
-                    reloadBlogs={reloadBlogs}
-                    key={blog.id}
-                    blog={blog}
-                    />
-          })}
+        {blogs.sort((a,b) => b.likes - a.likes).map(blog => {
+          return <Blog
+            setErrorMessage={setErrorMessage}
+            reloadBlogs={reloadBlogs}
+            key={blog.id}
+            blog={blog}
+          />
+        })}
       </div>
     </>
 
@@ -168,4 +168,4 @@ const App = () => {
 }
 
 
-export default App;
+export default App
