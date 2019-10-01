@@ -5,12 +5,12 @@ import blogsService from '../services/blogs'
 
 /*import LikeButton from './LikeButton'*/
 
-const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
+const Blog = ({ blog, reloadBlogs, setErrorMessage, user }) => {
 
   const [ visible, setVisible ] = useState(false)
   const [ likeCounter, setLikeCounter ] = useState(0)
-  const [ deleteVisible, setdeleteVisable ] = useState(false)
 
+  const currentUser = (JSON.parse(window.localStorage.loggedBlogappUser))
 
   useEffect(() => {
     if (blog.likes === undefined) {
@@ -75,6 +75,12 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
     console.log(event.target.value)
     event.stopPropagation()
   }*/
+  let showDelete = {display: ''}
+  if (currentUser.id === blog.user.id){
+   showDelete = {display: ''}
+  } else {
+   showDelete = {display: 'none'}
+  }
 
   return (
   <>
@@ -101,7 +107,7 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
         {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
       </div>
     </div>
-      <div>
+      <div style={showDelete}>
         <DeleteBlogButton handleDeleteClick={handleDeleteClick} key={blog.id} blogId={blog.id}/>
       </div>
     </div>

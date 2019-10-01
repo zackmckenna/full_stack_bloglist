@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import LoginForm from './LoginForm'
 
 const BlogForm = ( {
   handleSubmit,
@@ -9,6 +11,17 @@ const BlogForm = ( {
   handleAuthorChange,
   handleUrlChange
 } ) => {
+
+  LoginForm.propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    handleAuthorChange: PropTypes.func.isRequired,
+    handleTitleChange: PropTypes.func.isRequired,
+    handleUrlChange: PropTypes.func.isRequired,
+    title: PropTypes.func.isRequired,
+    author: PropTypes.func.isRequired,
+    url: PropTypes.func.isRequired
+  }
+
   return (
     <div>
 
@@ -44,6 +57,7 @@ const BlogForm = ( {
     </div>
   )
 }
+
 /*const handleCreateNew = async (props) => {
     try{
       const blog = await blogsService.createNew({
