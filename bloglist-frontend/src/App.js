@@ -49,16 +49,18 @@ const App = () => {
       const user = await loginService.login({
         username: event.target.username.value, password: event.target.password.value
       })
-
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
-      console.log(localStorage)
+      username.reset()
+      password.reset()
       setUser(user)
       blogsService.setToken(user.token)
       setLoginMessage(`${user.name} is logged in`)
       setLoggedIn(true)
     } catch (exception){
+      username.reset()
+      password.reset()
       setErrorMessage('Wrong credentials')
       setTimeout(() => {
         setErrorMessage(null)
@@ -101,8 +103,7 @@ const App = () => {
       console.log(exception)
     }
   }
-  console.log(username)
-  console.log(password)
+
   if (user === null && loggedIn === false) {
     return (
       <>
