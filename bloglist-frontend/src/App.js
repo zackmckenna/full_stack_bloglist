@@ -45,10 +45,9 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
-    console.log(username.value, password.value)
     try {
       const user = await loginService.login({
-        username, password
+        username: event.target.username.value, password: event.target.password.value
       })
 
       window.localStorage.setItem(

@@ -12,8 +12,6 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
 
   const currentUser = (JSON.parse(window.localStorage.loggedBlogappUser))
 
-  console.log(blog)
-
   useEffect(() => {
     if (blog.likes === undefined) {
       blog.likes = 0
