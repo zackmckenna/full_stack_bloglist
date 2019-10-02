@@ -6,10 +6,11 @@ import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import blogsService from './services/blogs'
 import BlogForm from './components/BlogForm'
+import { useField } from './hooks'
 
 const App = () => {
-  const [ username, setUsername ] = useState('')
-  const [ password, setPassword ] = useState('')
+  /*const [ username, setUsername ] = useState('')*/
+  /*const [ password, setPassword ] = useState('')*/
   const [ user, setUser ] = useState(null)
   const [ blogs, setBlogs ] = useState([])
   const [ errorMessage, setErrorMessage ] = useState('')
@@ -19,6 +20,9 @@ const App = () => {
   const [ author, setAuthor ] = useState('')
   const [ url, setUrl ] = useState('')
   const [ notification, setNotification ] = useState('')
+
+  const username = useField('text')
+  const password = useField('text')
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
@@ -41,10 +45,12 @@ const App = () => {
 
   const handleLogin = async (event) => {
     event.preventDefault()
+    console.log(username.value, password.value)
     try {
       const user = await loginService.login({
-        username, password,
+        username, password
       })
+
       window.localStorage.setItem(
         'loggedBlogappUser', JSON.stringify(user)
       )
@@ -52,8 +58,6 @@ const App = () => {
       setUser(user)
       blogsService.setToken(user.token)
       setLoginMessage(`${user.name} is logged in`)
-      setUsername('')
-      setPassword('')
       setLoggedIn(true)
     } catch (exception){
       setErrorMessage('Wrong credentials')
@@ -98,7 +102,8 @@ const App = () => {
       console.log(exception)
     }
   }
-
+  console.log(username)
+  console.log(password)
   if (user === null && loggedIn === false) {
     return (
       <>
@@ -111,8 +116,6 @@ const App = () => {
           <LoginForm
             username={username}
             password={password}
-            handleUsernameChange={({ target }) => setUsername(target.value)}
-            handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
           />
         </Togglable>

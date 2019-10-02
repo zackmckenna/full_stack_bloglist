@@ -87,7 +87,6 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
   return (
   <>
   <div className='blog'>
-    click me
     <div style={hideWhenVisible}>
       <div style={blogStyle}>
         <div className='blogContent' onClick={toggleVisibility}>
