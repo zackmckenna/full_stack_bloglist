@@ -26,8 +26,8 @@ const LoginForm = ({
           value={password.value}
           name='password'
           onChange={password.onChange}
-        />
-      </div>
+          />
+        </div>
         <button type='submit'>login</button>
     </form>
   </div>
