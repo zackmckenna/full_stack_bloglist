@@ -20,13 +20,9 @@ module.exports = {
       "react", "hooks"
   ],
   "rules": {
-<<<<<<< HEAD
       "rules": {
           "react-hooks/rules-of-hooks": "error"
       },
-=======
-      "react-hooks/rules-of-hooks": "error",
->>>>>>> f0aa4fefe4daa97957606036ea07a2da58abe304
       "indent": [
           "error",
           2
