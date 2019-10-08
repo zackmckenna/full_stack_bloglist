@@ -104,7 +104,7 @@ const Blog = ({ blog, reloadBlogs, setErrorMessage }) => {
           <div>
           added by {blog.user.name}
           </div>
-          <div>
+          <div className='likesDiv'>
             {likeCounter} likes <LikeButton handleLikeClick={handleLikeClick} likes={blog.likes} blogId={blog.id} key={blog.id}/>
           </div>
         </div>

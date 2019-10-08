@@ -156,7 +156,7 @@ const App = () => {
           </br>
         </div>
 
-      <div>
+      <div className='blogDiv'>
         {blogs.sort((a,b) => b.likes - a.likes).map(blog => {
           return <Blog
             setErrorMessage={setErrorMessage}
