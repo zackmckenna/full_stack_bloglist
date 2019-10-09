@@ -1,6 +1,4 @@
 import { useState } from 'react'
-import axios from 'axios'
-const baseUrl = '/api/blogs'
 
 export const useField = (type) => {
   const [value, setValue] = useState('')

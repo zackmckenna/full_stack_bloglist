@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { createStore } from 'redux'
 import loginService from './services/login'
 import Blog from './components/Blog'
 import Notification from './components/Notification'
